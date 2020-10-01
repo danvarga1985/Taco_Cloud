@@ -4,20 +4,16 @@ import daniel.varga.tacocloud.domain.Ingredient;
 import daniel.varga.tacocloud.domain.Taco;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.ui.Model;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest
@@ -60,5 +56,16 @@ class DesignTacoControllerTest {
                 .andExpect(model().attribute("veggies", ingredients.subList(4, 6)))
                 .andExpect(model().attribute("cheese", ingredients.subList(6, 8)))
                 .andExpect(model().attribute("sauce", ingredients.subList(8, 10)));
+    }
+
+    @Test
+    void testProcessDesign() throws Exception {
+        mockMvc.perform(post("/design")
+                .content("name=Test+Taco&ingredients=FLTO,GRBF,CHED")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().is3xxRedirection())
+                //??????
+                .andExpect(header().stringValues("Location", "/orders/current"))
+                .andExpect(view().name("redirect:/orders/current"));
     }
 }

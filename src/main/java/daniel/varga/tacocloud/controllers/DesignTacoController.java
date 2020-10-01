@@ -1,5 +1,6 @@
 package daniel.varga.tacocloud.controllers;//package daniel.varga.tacocloud.controllers;
 
+import daniel.varga.tacocloud.domain.Design;
 import daniel.varga.tacocloud.domain.Ingredient;
 import daniel.varga.tacocloud.domain.Ingredient.Type;
 import daniel.varga.tacocloud.domain.Taco;
@@ -7,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Arrays;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/design")
 public class DesignTacoController {
+
     @GetMapping
     public String showDesignForm(Model model) {
         List<Ingredient> ingredients = Arrays.asList(
@@ -43,6 +46,13 @@ public class DesignTacoController {
         // The model consists of (A.) empty Taco object, (B.) all the distinct Types as Lists of Ingredients
         return "design";
     }
+
+    @PostMapping
+    public String processDesign(Design design) {
+        //TODO: save Taco design
+         return "redirect:/orders/current";
+    }
+
 
     private List<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
         return ingredients
