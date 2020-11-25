@@ -42,7 +42,11 @@ class DesignTacoControllerTest {
 
         design = new Taco();
         design.setName("Test Taco");
-        design.setIngredients(Arrays.asList("FLTO", "GRBF", "CHED"));
+
+        Ingredient flourTortilla = new Ingredient("1", "Flour Tortilla", Ingredient.Type.WRAP);
+        Ingredient grounfBeef = new Ingredient("2", "Ground Beef", Ingredient.Type.PROTEIN);
+        Ingredient cheddar = new Ingredient("3", "Cheddar", Ingredient.Type.CHEESE);
+        design.setIngredients(Arrays.asList(flourTortilla, grounfBeef, cheddar));
 
     }
 
